@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="templates/homepage.css"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Groupie Tracker</title>
 </head>
-<body>
-    <div class="card">
-        <div class="container" style="padding: 2px 16px;">
-        {{ range . }}
-        <img src="{{ .Image }}" alt="Artist Pic" style="width:150px;height:150px;">
-        <h3> {{ .ID }}. {{ .Name }} </h3>
-        {{end}}
-        </div> 
-    </div>
-</body>
-</html>
 
+<body>
+    <div class="container">
+        <div class="row">
+            {{ range . }}
+        <div class="col-sm-4">
+            <div class="card">
+                <img src="{{ .Image }}" alt="Artist Pic">
+                <div class="card-body">
+                    <h5 class="card-title"> Artist: {{ .Name }} </h5>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+</body>
+
+</html>
