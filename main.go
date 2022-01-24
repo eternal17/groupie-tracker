@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"net/http"
 )
@@ -20,7 +21,16 @@ type Artists struct {
 	Relations    string   `json:"relations"`
 }
 
+var tpl *template.Template
+
 func main() {
+	tpl = template.Must(template.ParseGlob("templates/*.html"))
+	http.HandleFunc("/", indexHandler)
+	http.ListenAndServe(":8080", nil)
+}
+
+// func for unmarshing json and returning the specific artist data needed.
+func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	// JSON response from the sample API artists page, using the Get method.
 	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
@@ -44,9 +54,5 @@ func main() {
 		fmt.Println(err)
 	}
 
-	// Now we can extrapolate the data we want by ranging through our slice, eg ID and Name.
-	for _, artist := range artists {
-		fmt.Println(artist.ID, artist.Name)
-	}
-
+	tpl.Execute(w, artists)
 }
