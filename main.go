@@ -26,6 +26,7 @@ var tpl *template.Template
 func main() {
 	tpl = template.Must(template.ParseGlob("templates/*.html"))
 	http.HandleFunc("/", indexHandler)
+	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates/"))))
 	http.ListenAndServe(":8080", nil)
 }
 

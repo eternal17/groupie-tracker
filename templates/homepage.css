@@ -1,0 +1,10 @@
+.col-sm-4 {
+    padding: 10px
+}
+
+.card {
+    width: 20rem;;
+}
+.card-title {
+    color: red;
+}
