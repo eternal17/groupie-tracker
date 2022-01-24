@@ -21,10 +21,6 @@ type Artists struct {
 	Relations    string   `json:"relations"`
 }
 
-type ArtistsData struct {
-	Name []string
-}
-
 var tpl *template.Template
 
 func main() {
@@ -58,20 +54,5 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	names := []string{}
-	// Now we can extrapolate the data we want by ranging through our slice, eg ID and Name.
-	for _, artist := range artists {
-		names = append(names, artist.Name)
-	}
-
-	p := ArtistsData{
-		Name: names,
-	}
-
-	tpl.Execute(w, p)
+	tpl.Execute(w, artists)
 }
-
-// As of now use this page to return all artists
-// func homepage(w http.ResponseWriter, r *http.Request) {
-// 	tpl.ExecuteTemplate(w, "homepage.html", jsonUnmarsh())
-// }
