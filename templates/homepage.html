@@ -7,11 +7,14 @@
     <title>Groupie Tracker</title>
 </head>
 <body>
-   {{ range . }}
-   
-   <h3> {{ .ID }}. {{ .Name }} {{.ConcertDates}} </h3>
-   
-   {{end}}
+    <div class="card">
+        <div class="container" style="padding: 2px 16px;">
+        {{ range . }}
+        <img src="{{ .Image }}" alt="Artist Pic" style="width:150px;height:150px;">
+        <h3> {{ .ID }}. {{ .Name }} </h3>
+        {{end}}
+        </div> 
+    </div>
 </body>
 </html>
 
