@@ -16,9 +16,42 @@ type Artists struct {
 	Members      []string `json:"members"`
 	CreationDate int      `json:"creationDate"`
 	FirstAlbum   string   `json:"firstAlbum"`
-	Locations    string   `json:"locations"`
-	ConcertDates string   `json:"concertDates"`
-	Relations    string   `json:"relations"`
+	// Locations    string   `json:"locations"`
+	// ConcertDates string   `json:"concertDates"`
+	// Relations    string   `json:"relations"`
+}
+
+type Location struct {
+	Index []struct {
+		ID        int      `json:"id"`
+		Locations []string `json:"locations"`
+		// Dates     string   `json:"dates"`
+	} `json:"index"`
+}
+
+type Date struct {
+	Index []struct {
+		ID    int      `json:"id"`
+		Dates []string `json:"dates"`
+	} `json:"index"`
+}
+
+type Relation struct {
+	Index []struct {
+		ID                int                 `json:"id"`
+		DatesandLocations map[string][]string `json:"datesLocations"`
+	}
+}
+
+type Threefields struct {
+	Local [][]string
+	Dts   [][]string
+	MP    []map[string][]string
+}
+
+type ReArtists struct {
+	A []Artists
+	Threefields
 }
 
 var tpl *template.Template
@@ -29,6 +62,8 @@ func main() {
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates/"))))
 	http.ListenAndServe(":8080", nil)
 }
+
+/////////////////////MAIN ABOVE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 // func for unmarshing json and returning the specific artist data needed.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +78,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 	// the ReadAll method reads the data as bytes. we can then convert to string to read all the data received from the response.
 	body, err := ioutil.ReadAll(resp.Body)
-	// fmt.Println(string(body))
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	// create a slice for our JSON data to be unmarshalled into.
 	var artists []Artists
@@ -55,5 +92,152 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	tpl.Execute(w, artists)
+	/////////////////////////////DATE STRUCT//////////////////////////////////////////////////////////////
+
+	// JSON response from the sample API artists page, using the Get method.
+	date, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
+
+	if err != nil {
+		fmt.Println("No response from request")
+	}
+
+	defer date.Body.Close()
+	// the ReadAll method reads the data as bytes. we can then convert to string to read all the data received from the response.
+	body2, err := ioutil.ReadAll(date.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// create a slice for our JSON data to be unmarshalled into.
+	var Dates Date
+
+	// We are unmarshalling our data, recieving the data, and pushing it into our artists slice.
+	err = json.Unmarshal(body2, &Dates)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	////////////////////////////LOCATION STRUCT///////////////////////////////////////////////////////////////////////////////
+
+	// JSON response from the sample API artists page, using the Get method.
+	local, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
+
+	if err != nil {
+		fmt.Println("No response from request")
+	}
+
+	defer local.Body.Close()
+	// the ReadAll method reads the data as bytes. we can then convert to string to read all the data received from the response.
+	body3, err := ioutil.ReadAll(local.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// create a slice for our JSON data to be unmarshalled into.
+	var Place Location
+
+	// We are unmarshalling our data, recieving the data, and pushing it into our artists slice.
+	err = json.Unmarshal(body3, &Place)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	///////////////////////Relations\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+	// JSON response from the sample API artists page, using the Get method.
+	relation, err := http.Get("https://groupietrackers.herokuapp.com/api/relation")
+
+	if err != nil {
+		fmt.Println("No response from request")
+	}
+
+	defer local.Body.Close()
+	// the ReadAll method reads the data as bytes. we can then convert to string to read all the data received from the response.
+	body4, err := ioutil.ReadAll(relation.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// create a slice for our JSON data to be unmarshalled into.
+	Relations := Relation{}
+
+	// We are unmarshalling our data, recieving the data, and pushing it into our artists slice.
+	err = json.Unmarshal(body4, &Relations)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	///////////////////////ARTISTS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+	// JSON response from the sample API artists page, using the Get method.
+	artist, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+
+	if err != nil {
+		fmt.Println("No response from request")
+	}
+
+	defer local.Body.Close()
+	// the ReadAll method reads the data as bytes. we can then convert to string to read all the data received from the response.
+	body1, err := ioutil.ReadAll(artist.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// create a slice for our JSON data to be unmarshalled into.
+	Artist := []Artists{}
+
+	// We are unmarshalling our data, recieving the data, and pushing it into our artists slice.
+	err = json.Unmarshal(body1, &Artist)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+
+	///////////////////////\/\/\/\\/\/\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+	var datesandLocal []map[string][]string
+
+	for _, value := range Relations.Index {
+
+		datesandLocal = append(datesandLocal, value.DatesandLocations)
+	}
+
+	var Dated [][]string
+
+	for i := 0; i < 52; i++ {
+		Dated = append(Dated, Dates.Index[i].Dates)
+	}
+
+	var Locale [][]string
+
+	for i := 0; i < 52; i++ {
+		Locale = append(Locale, Place.Index[i].Locations)
+	}
+
+////////////////////////////////////////////////////////////////////////
+
+	three := Threefields{
+		Locale,
+		Dated,
+		datesandLocal,
+	}
+
+	Artful := ReArtists{
+
+		Artist,
+		three,
+	}
+
+	// for i, values := range Artful.A {
+	// 	fmt.Println(i, values.Name)
+
+	// }
+
+	tpl.ExecuteTemplate(w, "homepage.html", Artful)
+
 }
