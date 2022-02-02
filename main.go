@@ -16,9 +16,6 @@ type Artists struct {
 	Members      []string `json:"members"`
 	CreationDate int      `json:"creationDate"`
 	FirstAlbum   string   `json:"firstAlbum"`
-	// Locations    string   `json:"locations"`
-	// ConcertDates string   `json:"concertDates"`
-	// Relations    string   `json:"relations"`
 }
 
 type Location struct {
@@ -43,17 +40,6 @@ type Relation struct {
 	}
 }
 
-type Threefields struct {
-	Local [][]string
-	Dts   [][]string
-	MP    []map[string][]string
-}
-
-type ReArtists struct {
-	A []Artists
-	Threefields
-}
-
 var tpl *template.Template
 
 func main() {
@@ -62,6 +48,8 @@ func main() {
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates/"))))
 	http.ListenAndServe(":8080", nil)
 }
+
+/////////////////////MAIN ABOVE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 // func for unmarshing json and returning the specific artist data needed.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -90,7 +78,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	// JSON response from the sample API dates page, using the Get method.
+	/////////////////////////////DATE STRUCT//////////////////////////////////////////////////////////////
+
+	// JSON response from the sample API artists page, using the Get method.
 	date, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
 
 	if err != nil {
@@ -114,7 +104,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	// JSON response from the sample API location page, using the Get method.
+	////////////////////////////LOCATION STRUCT///////////////////////////////////////////////////////////////////////////////
+
+	// JSON response from the sample API artists page, using the Get method.
 	local, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
 
 	if err != nil {
@@ -138,7 +130,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	// JSON response from the sample API relations page, using the Get method.
+	///////////////////////Relations\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+	// JSON response from the sample API artists page, using the Get method.
 	relation, err := http.Get("https://groupietrackers.herokuapp.com/api/relation")
 
 	if err != nil {
@@ -161,6 +155,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	///////////////////////ARTISTS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 	// JSON response from the sample API artists page, using the Get method.
 	artist, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
@@ -186,6 +182,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
+	///////////////////////\/\/\/\\/\/\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 	var datesandLocal []map[string][]string
 
 	for _, value := range Relations.Index {
@@ -193,33 +191,23 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		datesandLocal = append(datesandLocal, value.DatesandLocations)
 	}
 
-	var Dated [][]string
+	////////////////////////////////////////////////////////////////////////
 
-	for i := 0; i < 52; i++ {
-		Dated = append(Dated, Dates.Index[i].Dates)
+	type Combined struct {
+		Artists
+		Dates     []string
+		Location  []string
+		Relations map[string][]string
 	}
 
-	var Locale [][]string
+	var combinedsliced [52]Combined
 
-	for i := 0; i < 52; i++ {
-		Locale = append(Locale, Place.Index[i].Locations)
+	for i := 0; i < len(combinedsliced); i++ {
+
+		combinedsliced[i] = Combined{Artist[i], Dates.Index[i].Dates, Place.Index[i].Locations, datesandLocal[i]}
+
 	}
 
-	three := Threefields{
-		Locale,
-		Dated,
-		datesandLocal,
-	}
-
-	Artful := ReArtists{
-
-		Artist,
-		three,
-	}
-
-	// for _, artist := range Artful.A {
-	// 	fmt.Println(artist.Name)
-	// }
-	tpl.ExecuteTemplate(w, "homepage.html", Artful)
+	tpl.ExecuteTemplate(w, "homepage.html", combinedsliced)
 
 }
