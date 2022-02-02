@@ -16,7 +16,8 @@
         <div class="row">
             {{ range . }}
                 <div class="col-sm-4">
-                    <div class="card text-center">
+                    <a href="/{{.Name}}" style="text-decoration:none;">
+                    <div class="card text-center" >
                         <img class="card-img" src="{{ .Image }}" alt="Artist Pic">
                         <div class="card-body">
                             <h5 class="card-title"> {{ .Name }} </h5>
@@ -26,6 +27,7 @@
                             </h6>
                         </div>
                     </div>
+                    </a>
                 </div>
             {{end}}
         </div>
