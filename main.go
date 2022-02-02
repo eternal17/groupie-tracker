@@ -63,8 +63,6 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-/////////////////////MAIN ABOVE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 // func for unmarshing json and returning the specific artist data needed.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 
@@ -92,9 +90,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	/////////////////////////////DATE STRUCT//////////////////////////////////////////////////////////////
-
-	// JSON response from the sample API artists page, using the Get method.
+	// JSON response from the sample API dates page, using the Get method.
 	date, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
 
 	if err != nil {
@@ -118,9 +114,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	////////////////////////////LOCATION STRUCT///////////////////////////////////////////////////////////////////////////////
-
-	// JSON response from the sample API artists page, using the Get method.
+	// JSON response from the sample API location page, using the Get method.
 	local, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
 
 	if err != nil {
@@ -144,9 +138,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	///////////////////////Relations\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-	// JSON response from the sample API artists page, using the Get method.
+	// JSON response from the sample API relations page, using the Get method.
 	relation, err := http.Get("https://groupietrackers.herokuapp.com/api/relation")
 
 	if err != nil {
@@ -169,9 +161,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	///////////////////////ARTISTS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 
 	// JSON response from the sample API artists page, using the Get method.
 	artist, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
@@ -197,9 +186,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-
-	///////////////////////\/\/\/\\/\/\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 	var datesandLocal []map[string][]string
 
 	for _, value := range Relations.Index {
@@ -219,8 +205,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		Locale = append(Locale, Place.Index[i].Locations)
 	}
 
-////////////////////////////////////////////////////////////////////////
-
 	three := Threefields{
 		Locale,
 		Dated,
@@ -233,11 +217,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		three,
 	}
 
-	// for i, values := range Artful.A {
-	// 	fmt.Println(i, values.Name)
-
+	// for _, artist := range Artful.A {
+	// 	fmt.Println(artist.Name)
 	// }
-
 	tpl.ExecuteTemplate(w, "homepage.html", Artful)
 
 }

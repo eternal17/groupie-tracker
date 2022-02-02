@@ -14,13 +14,17 @@
 <body>
     <div class="container">
         <div class="row">
-            {{ range . }}
+            {{ range .A }}
                 <div class="col-sm-4">
-                    <div class="card">
-                        <img src="{{ .Image }}" alt="Artist Pic">
-                             <div class="card-body">
-                                <h5 class="card-title"> Artist: {{ .Name }} </h5>
-                            </div>
+                    <div class="card text-center">
+                        <img class="card-img" src="{{ .Image }}" alt="Artist Pic">
+                        <div class="card-body">
+                            <h5 class="card-title"> {{ .Name }} </h5>
+                            <h6 class="card-content">
+                                <p>Formed: <span class="tag tag-blue">{{ .CreationDate }}</span><p>
+                                <p>First Album: <span class="tag tag-blue">{{ .FirstAlbum }}</span></p>
+                            </h6>
+                        </div>
                     </div>
                 </div>
             {{end}}
