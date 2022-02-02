@@ -40,6 +40,13 @@ type Relation struct {
 	}
 }
 
+type Combined struct {
+	Artists
+	Dates     []string
+	Location  []string
+	Relations map[string][]string
+}
+
 var tpl *template.Template
 
 func main() {
@@ -51,13 +58,12 @@ func main() {
 
 /////////////////////MAIN ABOVE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-// func for unmarshing json and returning the specific artist data needed.
+// func for executing homepage
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "homepage.html", GetData())
+}
 
-
-	/////////////////////////////DATE STRUCT//////////////////////////////////////////////////////////////
-
-	// JSON response from the sample API artists page, using the Get method.
+func GetData() [52]Combined {
 	date, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
 
 	if err != nil {
@@ -168,14 +174,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		datesandLocal = append(datesandLocal, value.DatesandLocations)
 	}
 
-	////////////////////////////////////////////////////////////////////////
-
-	type Combined struct {
-		Artists
-		Dates     []string
-		Location  []string
-		Relations map[string][]string
-	}
+	///////////////////////////////////////////////////////////////////////
 
 	var combinedsliced [52]Combined
 
@@ -185,6 +184,5 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	tpl.ExecuteTemplate(w, "homepage.html", combinedsliced)
-
+	return combinedsliced
 }
