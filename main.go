@@ -54,29 +54,6 @@ func main() {
 // func for unmarshing json and returning the specific artist data needed.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 
-	// JSON response from the sample API artists page, using the Get method.
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
-
-	if err != nil {
-		fmt.Println("No response from request")
-	}
-
-	defer resp.Body.Close()
-	// the ReadAll method reads the data as bytes. we can then convert to string to read all the data received from the response.
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// create a slice for our JSON data to be unmarshalled into.
-	var artists []Artists
-
-	// We are unmarshalling our data, recieving the data, and pushing it into our artists slice.
-	err = json.Unmarshal(body, &artists)
-
-	if err != nil {
-		fmt.Println(err)
-	}
 
 	/////////////////////////////DATE STRUCT//////////////////////////////////////////////////////////////
 
