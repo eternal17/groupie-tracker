@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="templates/testpage.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Groupie Tracker</title>
+</head>
+
+
+<body>
+
+
+    
+    {{range $, $person := (index .X a).Members}}
+
+
+    <div class="contain">
+
+        <span class = backgroundtext>{{$person}}</span>
+
+        {{end}}
+ 
+
+            <div class="card mx-auto" style="width: 18rem;">
+                   <div class="maincard"> 
+                    <h3 class="cardtitle" style="text-align:center;"> 
+                        <strong>{{(index . 11).Name}} </strong></h3>
+                    <img src ="{{(index . 11).Image}}" class="artistpic">
+                    <br>
+                <h6 class="tour">TOUR DATES </h6>
+                {{range $place, $dates := (index . 11).Relations}}
+                <h6 class="place"><strong>{{$place}} </strong></h6>
+                {{range $, $date := $dates}}
+                <h6 class="date"> {{$date}}</h6>
+
+
+                {{end}}
+
+                {{end}}
+
+           </div>
+   </div>
+
+</div>
+</body>
+<script>
+    function FillSlogan()
+{
+    var text = '';
+
+    for(var i=0; i<50; i++)
+    {
+        text += 'Making the Web a Better Place ';
+    }
+
+    $('#Slogan').html(text);
+}
+</script>
+</html>

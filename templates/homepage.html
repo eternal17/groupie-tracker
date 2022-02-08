@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="templates/homepage.css"/>
+    <link rel="icon" href="data:,">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -16,8 +17,8 @@
         <div class="row">
             {{ range . }}
                 <div class="col-sm-4">
-                    <a href="/{{.Name}}" style="text-decoration:none;">
-                    <div class="card text-center" >
+                    <a href="/{{.ID}}" style="text-decoration:none;" >
+                    <div class="card text-center">
                         <img class="card-img" src="{{ .Image }}" alt="Artist Pic">
                         <div class="card-body">
                             <h5 class="card-title"> {{ .Name }} </h5>
