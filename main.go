@@ -9,6 +9,7 @@ import (
 	"strconv"
 )
 
+// This variable is used so we can later pass the id of the artist from one handler func to another.
 var a int
 
 // declare a struct with the same structure as the stuctured json, which we can later unmarshall after getting(http.GET) the data required.
@@ -50,15 +51,6 @@ type Combined struct {
 	Relations map[string][]string
 }
 
-type X [52]Combined
-
-// const X = GetData()
-type AllData struct {
-	// ArtistData func() [52]Combined
-	X         [52]Combined
-	ArtistsID int
-}
-
 var tpl *template.Template
 
 func main() {
@@ -87,12 +79,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func artistPage(w http.ResponseWriter, r *http.Request) {
-	alldata := AllData{
-		GetData(),
-		a,
-	}
-	// fmt.Println(a)
-	tpl.ExecuteTemplate(w, "testpage.html", alldata)
+	fmt.Println(GetData()[a])
+	tpl.ExecuteTemplate(w, "testpage.html", GetData()[a])
 }
 
 func GetData() [52]Combined {

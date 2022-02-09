@@ -1,3 +1,18 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{range $_, $member := .Members}}
+        <li>{{$member}}</li>
+        {{end}}
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,19 +30,19 @@
 <body>
 
     <div class="container">
-        {{range $_, $person := (index .X .ArtistsID).Members}}
+        {{range $_, $person := .Members}}
         <p class="backgroundtext">{{$person}}</p>
         {{end}}
 
         <div class="card mx-auto" style="width: 18rem;">
             <div class="maincard">
                 <h3 class="cardtitle" style="text-align:center;">
-                    <strong>{{(index .X .ArtistsID).Name}} </strong>
+                    <strong>{{.Name}}</strong>
                 </h3>
-                <img src="{{(index .X .ArtistsID).Image}}" class="artistpic">
+                <img src="{{.Image}}" class="artistpic">
                 <br>
                 <h6 class="tour">TOUR DATES </h6>
-                {{range $place, $dates := (index .X .ArtistsID).Relations}}
+                {{range $place, $dates := .Relations}}
                 <h6 class="place"><strong>{{$place}} </strong></h6>
                 {{range $_, $date := $dates}}
                 <h6 class="date"> {{$date}}</h6>
