@@ -9,9 +9,6 @@ import (
 	"strconv"
 )
 
-// This variable is used so we can later pass the id of the artist from one handler func to another.
-var a int
-
 // declare a struct with the same structure as the stuctured json, which we can later unmarshall after getting(http.GET) the data required.
 type Artists struct {
 	ID           int      `json:"id"`
@@ -56,7 +53,7 @@ var tpl *template.Template
 func main() {
 	tpl = template.Must(template.ParseGlob("templates/*.html"))
 	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/artist", artistPage)
+	http.HandleFunc("/artist/", artistPage)
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates/"))))
 	http.ListenAndServe(":8080", nil)
 }
@@ -65,22 +62,13 @@ func main() {
 
 // func for executing homepage
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-
-	// getting url path
-	urlPath := r.URL.Path[1:]
-
-	// converting the id received as string to int
-	intID, _ := strconv.Atoi(urlPath)
-
-	// need to minus one here as it relates to the index position.
-	a = intID - 1
 	tpl.ExecuteTemplate(w, "homepage.html", GetData())
-
 }
 
 func artistPage(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(GetData()[a])
-	tpl.ExecuteTemplate(w, "testpage.html", GetData()[a])
+	selection := r.URL.Query().Get("selection")
+	selectionId, _ := strconv.Atoi(selection)
+	tpl.Execute(w, GetData()[selectionId-1])
 }
 
 func GetData() [52]Combined {

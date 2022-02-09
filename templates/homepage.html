@@ -17,7 +17,7 @@
         <div class="row">
             {{ range . }}
                 <div class="col-sm-4">
-                    <a href="/{{.ID}}" style="text-decoration:none;" >
+                    <a href="/artist?selection={{.ID}}" style="text-decoration:none;" >
                     <div class="card text-center">
                         <img class="card-img" src="{{ .Image }}" alt="Artist Pic">
                         <div class="card-body">
