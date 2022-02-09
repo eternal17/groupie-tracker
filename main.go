@@ -63,14 +63,19 @@ func main() {
 
 // func for executing homepage
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "homepage.html", GetData())
+
+	if err := tpl.ExecuteTemplate(w, "homepage.html", GetData()); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func artistPage(w http.ResponseWriter, r *http.Request) {
 	selection := r.URL.Query().Get("selection")
 	selectionId, _ := strconv.Atoi(selection)
-	fmt.Println("HELLLLLOOOO", selectionId)
-	tpl.ExecuteTemplate(w, "artistpage.html", GetData()[selectionId-1])
+	if err := tpl.ExecuteTemplate(w, "artistpage.html", GetData()[selectionId-1]); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func GetData() [52]Combined {
