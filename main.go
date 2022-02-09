@@ -53,8 +53,9 @@ var tpl *template.Template
 func main() {
 	tpl = template.Must(template.ParseGlob("templates/*.html"))
 	http.HandleFunc("/", indexHandler)
+	// seeing css http.HandleFunc("/artist", artistPage)
 	http.HandleFunc("/artist/", artistPage)
-	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates/"))))
+	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("./templates"))))
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -68,7 +69,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func artistPage(w http.ResponseWriter, r *http.Request) {
 	selection := r.URL.Query().Get("selection")
 	selectionId, _ := strconv.Atoi(selection)
-	tpl.Execute(w, GetData()[selectionId-1])
+	fmt.Println("HELLLLLOOOO", selectionId)
+	tpl.ExecuteTemplate(w, "artistpage.html", GetData()[selectionId-1])
 }
 
 func GetData() [52]Combined {
