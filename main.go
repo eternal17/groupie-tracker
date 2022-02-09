@@ -79,7 +79,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	// converting the id received as string to int
 	intID, _ := strconv.Atoi(urlPath)
-	a = intID
+
+	// need to minus one here as it relates to the index position.
+	a = intID - 1
 	tpl.ExecuteTemplate(w, "homepage.html", GetData())
 
 }
@@ -89,7 +91,7 @@ func artistPage(w http.ResponseWriter, r *http.Request) {
 		GetData(),
 		a,
 	}
-	fmt.Println(a)
+	// fmt.Println(a)
 	tpl.ExecuteTemplate(w, "testpage.html", alldata)
 }
 
@@ -215,24 +217,4 @@ func GetData() [52]Combined {
 	}
 
 	return combinedsliced
-}
-
-func TrimAtoi(s string) int {
-	neg := false       // intialise neg as false
-	slice := []rune(s) // slice string into a rune to manipulate it
-	trim := 0          // initialise trim as 0
-	for i := 0; i < len(slice); i++ {
-
-		if !neg && trim == 0 && slice[i] == '-' {
-			neg = true
-		}
-		if slice[i] >= '0' && slice[i] <= '9' {
-			trim *= 10
-			trim += int(slice[i] - 48)
-		}
-	}
-	if neg {
-		return trim * -1
-	}
-	return trim
 }
