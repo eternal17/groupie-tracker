@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 // declare a struct with the same structure as the stuctured json, which we can later unmarshall after getting(http.GET) the data required.
@@ -52,7 +53,9 @@ var tpl *template.Template
 func main() {
 	tpl = template.Must(template.ParseGlob("templates/*.html"))
 	http.HandleFunc("/", indexHandler)
-	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates/"))))
+	// seeing css http.HandleFunc("/artist", artistPage)
+	http.HandleFunc("/artist/", artistPage)
+	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("./templates"))))
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -61,6 +64,13 @@ func main() {
 // func for executing homepage
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "homepage.html", GetData())
+}
+
+func artistPage(w http.ResponseWriter, r *http.Request) {
+	selection := r.URL.Query().Get("selection")
+	selectionId, _ := strconv.Atoi(selection)
+	fmt.Println("HELLLLLOOOO", selectionId)
+	tpl.ExecuteTemplate(w, "artistpage.html", GetData()[selectionId-1])
 }
 
 func GetData() [52]Combined {

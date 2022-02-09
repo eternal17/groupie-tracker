@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="templates/artistpage.css"/>
+    <link rel="icon" href="data:,">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Groupie Tracker</title>
+</head>
+
+<body>
+
+    <div class="container">
+        {{range $_, $person := .Members}}
+        <p class="backgroundtext">{{$person}}</p>
+        {{end}}
+
+        <div class="card mx-auto" style="width: 18rem;">
+            <div class="maincard">
+                <h3 class="cardtitle" style="text-align:center;">
+                    <strong>{{.Name}}</strong>
+                </h3>
+                <img src="{{.Image}}" class="artistpic">
+                <br>
+                <h6 class="tour">TOUR DATES </h6>
+                {{range $place, $dates := .Relations}}
+                <h6 class="place"><strong>{{$place}} </strong></h6>
+                {{range $_, $date := $dates}}
+                <h6 class="date"> {{$date}}</h6>
+                {{end}}
+                {{end}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
