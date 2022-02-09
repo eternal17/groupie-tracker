@@ -12,7 +12,7 @@
     <title>Groupie Tracker</title>
 </head>
 
-<body>
+<body style="background-color: #0e0e0e;">
 
     <div class="container">
         {{range $_, $person := .Members}}
@@ -20,8 +20,7 @@
         <h6 class="backgroundtext">{{$person}}</h6>
         {{end}}
 
-        <div class="card mx-auto" style="width: 18rem;">
-            <div class="maincard">
+        <div class="maincard card mx-auto " style="width: 18rem; position: absolute; ">
                 <h3 class="cardtitle" style="text-align:center;">
                     <strong>{{.Name}}</strong>
                 </h3>
@@ -35,7 +34,7 @@
                 {{end}}
                 {{end}}
             </div>
-        </div>
+  
     </div>
 </body>
 
