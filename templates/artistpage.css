@@ -9,10 +9,10 @@
 
 .backgroundtext{
     position: relative;
-    top: 8px;
-    left: 16px;
+    top: 10px;
+    left: -88px;
     background: linear-gradient(#131c27, #663b34);
-    font:bold 4rem 'Helvetica', Sans-serif;
+    font:bold 3rem 'Helvetica', Sans-serif;
     background-image:  url(https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=640&q=80);
     -webkit-background-clip: text;
     background-clip: text;
@@ -95,6 +95,6 @@ background-color: rgb(0, 0, 0);
 
 .card{
     
-    top: 10%;
+    top: 6%;
     left: 40vw;
 }

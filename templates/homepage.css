@@ -11,14 +11,10 @@
 .card {
     width: 18rem;
     position: inherit;
+    background-color: #0e0e0e;
 }
 
-/* .card-img{
-    height: 250px;
-} */
 
-
-/***************/
 .container .card .card-img {
     position: relative;
 
