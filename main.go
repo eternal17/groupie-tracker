@@ -70,6 +70,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//gets ID from the URL & executes templates with data specific to that ID
 func artistPage(w http.ResponseWriter, r *http.Request) {
 	selection := r.URL.Query().Get("selection")
 	selectionId, _ := strconv.Atoi(selection)
@@ -78,6 +79,7 @@ func artistPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//
 func GetData() [52]Combined {
 	date, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
 
