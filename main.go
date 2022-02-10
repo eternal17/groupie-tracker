@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-// declare a struct with the same structure as the stuctured json, which we can later unmarshall after getting(http.GET) the data required.
+// declare structs with the same structure as the stuctured json, which we can later unmarshall after getting(http.GET) the data required.
 type Artists struct {
 	ID           int      `json:"id"`
 	Image        string   `json:"image"`
@@ -79,7 +79,7 @@ func artistPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//
+//unmarshals the given json apis and returns an array of structs with all data fully parsed
 func GetData() [52]Combined {
 	date, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
 
