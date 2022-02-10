@@ -3,18 +3,22 @@
 * {
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     color: white;
+    
 }
 
 
 .backgroundtext{
+    position: relative;
+    top: 10px;
+    left: -88px;
     background: linear-gradient(#131c27, #663b34);
-    background-clip: text;
-    width:50%;
-    font:bold 10rem 'Helvetica', Sans-serif;
+    font:bold 3rem 'Helvetica', Sans-serif;
     background-image:  url(https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=640&q=80);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    z-index: -1;
+
 }
 
 .container{
@@ -30,22 +34,24 @@
 
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=640&q=80);
-
+background-color: rgb(0, 0, 0);
 }
 
 
 .maincard{
     width: 18rem ;
     height: auto;
-    position: inherit;
+    position: absolute;
+    top: "50%";
+    left: "50%";
+    margin: auto;
     background-color:#000;
 
     border-style: solid;
     border-color: rgb(213, 215, 219);
     border-width:  10px;
     background-image: url(https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=640&q=80);
-
+    z-index: 1;
 
 }
 
@@ -83,6 +89,12 @@
 }
 
 .artistpic{
-    margin:0% 0% 0% 5%  ;
+    margin: auto  ;
     justify-content: center; 
+}
+
+.card{
+    
+    top: 6%;
+    left: 40vw;
 }
