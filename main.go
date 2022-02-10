@@ -64,6 +64,13 @@ func main() {
 // func for executing homepage
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 
+	// page not found error
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		fmt.Fprintf(w, "Status 404: Page Not Found")
+		return
+	}
+
 	if err := tpl.ExecuteTemplate(w, "homepage.html", GetData()); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -72,8 +79,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 //gets ID from the URL & executes templates with data specific to that ID
 func artistPage(w http.ResponseWriter, r *http.Request) {
+
 	selection := r.URL.Query().Get("selection")
 	selectionId, _ := strconv.Atoi(selection)
+
 	if err := tpl.ExecuteTemplate(w, "artistpage.html", GetData()[selectionId-1]); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
