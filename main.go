@@ -59,13 +59,12 @@ func main() {
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("./templates"))))
 
 	port := os.Getenv("PORT")
+	fmt.Println(port)
 	if port == "" {
 		port = "8080" // Default port if not specified
 	}
-	if err := http.ListenAndServe(":" + port, nil); err !=nil{
-		os.Exit(1)
-	}
 
+	http.ListenAndServe(":"+port, nil)
 }
 
 /////////////////////MAIN ABOVE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
