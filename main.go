@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -56,7 +57,15 @@ func main() {
 	// seeing css http.HandleFunc("/artist", artistPage)
 	http.HandleFunc("/artist/", artistPage)
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("./templates"))))
-	http.ListenAndServe(":8080", nil)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default port if not specified
+	}
+	if err := http.ListenAndServe(":" + port, nil); err !=nil{
+		os.Exit(1)
+	}
+
 }
 
 /////////////////////MAIN ABOVE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
