@@ -20,7 +20,7 @@
             {{ range . }}
                 <div class="col-sm-4">
                     <a href="/artist?selection={{.ID}}" style="text-decoration:none;" >
-                    <div class="card text-center" style="background-color: #0e0e0e;">
+                    <div class="card text-"center style="background-color: #0e0e0e;">
                         <img class="card-img" src="{{ .Image }}" alt="Artist Pic">
                         <div class="card-body"  style="background-color: #0e0e0e;" >
                             <h5 class="card-title"> {{ .Name }} </h5>
@@ -28,6 +28,7 @@
                                 <p>Formed: <span class="tag tag-blue">{{ .CreationDate }}</span><p>
                                 <p>First Album: <span class="tag tag-blue">{{ .FirstAlbum }}</span></p>
                             </h6>
+
                         </div>
                     </div>
                     </a>

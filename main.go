@@ -52,6 +52,11 @@ type Combined struct {
 var tpl *template.Template
 
 func main() {
+
+	for _, date := range GetData()[30].Dates {
+		fmt.Println(date)
+	}
+
 	tpl = template.Must(template.ParseGlob("templates/*.html"))
 	http.HandleFunc("/", indexHandler)
 	// seeing css http.HandleFunc("/artist", artistPage)
@@ -59,7 +64,6 @@ func main() {
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("./templates"))))
 
 	port := os.Getenv("PORT")
-	fmt.Println(port)
 	if port == "" {
 		port = "8080" // Default port if not specified
 	}
