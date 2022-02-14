@@ -53,7 +53,6 @@ type Combined struct {
 
 var tpl *template.Template
 
-
 func main() {
 
 	tpl = template.Must(template.ParseGlob("templates/*.html"))
@@ -71,7 +70,6 @@ func main() {
 }
 
 //||||||||||||||||||||||||||MAIN ABOVE|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 
 // func for executing homepage
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -107,6 +105,11 @@ func artistPage(w http.ResponseWriter, r *http.Request) {
 	selection := r.URL.Query().Get("selection")
 	selectionId, _ := strconv.Atoi(selection)
 
+	if selectionId < 1 || selectionId > 52 {
+		http.NotFound(w, r)
+		fmt.Fprintf(w, "Status 404: Page Not Found")
+		return
+	}
 	if err := tpl.ExecuteTemplate(w, "artistpage.html", combinedArray(artStruct, datStruct, locStruct, relMap)[selectionId-1]); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -252,4 +255,3 @@ func combinedArray(a []Artists, b Date, c Location, d []map[string][]string) [52
 	}
 	return combinedsliced
 }
-
