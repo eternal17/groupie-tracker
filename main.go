@@ -105,6 +105,7 @@ func artistPage(w http.ResponseWriter, r *http.Request) {
 	selection := r.URL.Query().Get("selection")
 	selectionId, _ := strconv.Atoi(selection)
 
+	// If the query is not a number between 1 and 52, return a 404 page.
 	if selectionId < 1 || selectionId > 52 {
 		http.NotFound(w, r)
 		fmt.Fprintf(w, "Status 404: Page Not Found")
