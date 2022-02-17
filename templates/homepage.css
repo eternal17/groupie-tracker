@@ -74,7 +74,9 @@
 
 .card-title {
     font-weight: bold;
+    text-align: center;
 }
+
 .tag {
     padding: .25em .75em;
     border-radius: 1em;
@@ -86,4 +88,5 @@
     background: #56CCF2;
   background: linear-gradient(to bottom, #2F80ED, #56CCF2);
     color: #fafafa;
+    text-align: center;
   }
