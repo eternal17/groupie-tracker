@@ -82,9 +82,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	// page not found error
 	if r.URL.Path != "/" {
-		http.NotFound(w, r)
-		fmt.Fprintf(w, "Status 404: Page Not Found")
+		tpl.Execute(w, "404.html")
 		return
+
 	}
 
 	if err := tpl.ExecuteTemplate(w, "homepage.html", combinedArray(artStruct, datStruct, locStruct, relMap)); err != nil {
@@ -107,9 +107,9 @@ func artistPage(w http.ResponseWriter, r *http.Request) {
 
 	// If the query is not a number between 1 and 52, return a 404 page.
 	if selectionId < 1 || selectionId > 52 {
-		http.NotFound(w, r)
-		fmt.Fprintf(w, "Status 404: Page Not Found")
+		tpl.Execute(w, "404.html")
 		return
+
 	}
 	if err := tpl.ExecuteTemplate(w, "artistpage.html", combinedArray(artStruct, datStruct, locStruct, relMap)[selectionId-1]); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
