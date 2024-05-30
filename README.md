@@ -1,5 +1,7 @@
 # Groupie-Tracker
 
+![](./groupie-tracker.gif)
+
 Groupie Trackers is a web project aimed at manipulating and displaying data from a given API to create an interactive and user-friendly website showcasing information about various bands and artists. The project involves working with an API structured into four parts:
 
 
@@ -11,7 +13,7 @@ Groupie Trackers is a web project aimed at manipulating and displaying data from
 
 4. **Relation**: Links the information from the artists, dates, and locations parts.
 
-![](./groupie-tracker.gif)
+
 
 ## Features
 
